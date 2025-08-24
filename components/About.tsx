@@ -97,59 +97,10 @@ export default function About() {
             </div>
           ))}
         </div>
-
-        {/* Team Section */}
-        <div className="mt-20 text-center">
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-12">
-            Meet Our <span className="text-primary-400">Expert Team</span>
-          </h3>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                name: "Sarah Johnson",
-                role: "CEO & Founder",
-                image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-              },
-              {
-                name: "Michael Chen",
-                role: "Lead Real Estate Agent",
-                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-              },
-              {
-                name: "Emily Rodriguez",
-                role: "Property Consultant",
-                image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-              },
-              {
-                name: "David Thompson",
-                role: "Investment Specialist",
-                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-              }
-            ].map((member, index) => (
-              <div key={index} className="group">
-                <div className="relative mb-4">
-                  <div className="relative h-48 w-full rounded-xl overflow-hidden">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                  </div>
-                </div>
-                <h4 className="text-lg font-semibold text-white mb-1">
-                  {member.name}
-                </h4>
-                <p className="text-primary-400">
-                  {member.role}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   )
 }
+
+
 

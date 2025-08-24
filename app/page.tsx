@@ -11,10 +11,10 @@ export default function Home() {
     <main className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
       <Hero />
       <Features />
-      <Properties />
+       <Properties />
       <About />
-      <Testimonials />
-      <Contact />
+      {/* <Testimonials /> */}
+      <Contact /> 
       <Footer />
     </main>
   )

@@ -1,88 +1,22 @@
+"use client"
 // import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { Search, Filter, MapPin, Bed, Bath, Square, Home, Building2, Phone } from 'lucide-react'
+import Link from 'next/link'
+import { Search, MapPin, Bed, Bath, Square, Phone } from 'lucide-react'
+import Image from 'next/image'
+import { properties as allProperties } from '@/data/properties'
+import React, { useState } from 'react'
 
 export default function PropertiesPage() {
-  const properties = [
-    {
-      id: 1,
-      title: "Modern Downtown Apartment",
-      type: "rent",
-      price: "$2,500/month",
-      location: "Downtown, City Center",
-      beds: 2,
-      baths: 2,
-      sqft: 1200,
-      image: "/properties/apartment1.jpg",
-      featured: true
-    },
-    {
-      id: 2,
-      title: "Luxury Family Home",
-      type: "sale",
-      price: "$750,000",
-      location: "Suburban Heights",
-      beds: 4,
-      baths: 3,
-      sqft: 2800,
-      image: "/properties/house1.jpg",
-      featured: true
-    },
-    {
-      id: 3,
-      title: "Cozy Studio Loft",
-      type: "rent",
-      price: "$1,800/month",
-      location: "Arts District",
-      beds: 1,
-      baths: 1,
-      sqft: 800,
-      image: "/properties/studio1.jpg",
-      featured: false
-    },
-    {
-      id: 4,
-      title: "Investment Property",
-      type: "sale",
-      price: "$450,000",
-      location: "University Area",
-      beds: 3,
-      baths: 2,
-      sqft: 1600,
-      image: "/properties/investment1.jpg",
-      featured: false
-    },
-    {
-      id: 5,
-      title: "Waterfront Condo",
-      type: "rent",
-      price: "$3,200/month",
-      location: "Harbor View",
-      beds: 2,
-      baths: 2,
-      sqft: 1400,
-      image: "/properties/condo1.jpg",
-      featured: true
-    },
-    {
-      id: 6,
-      title: "Historic Townhouse",
-      type: "sale",
-      price: "$1,200,000",
-      location: "Historic District",
-      beds: 5,
-      baths: 4,
-      sqft: 3200,
-      image: "/properties/townhouse1.jpg",
-      featured: false
-    }
-  ]
-
+  const [visible, setVisible] = useState(9)
+  const [filter, setFilter] = useState<'all' | 'rent' | 'sale'>('all')
+  const filtered = allProperties.filter(p => filter === 'all' ? true : p.type === filter)
+  const list = filtered.slice(0, visible)
   const filters = [
-    { label: "All Properties", value: "all", count: properties.length },
-    { label: "For Rent", value: "rent", count: properties.filter(p => p.type === "rent").length },
-    { label: "For Sale", value: "sale", count: properties.filter(p => p.type === "sale").length }
-  ]
+    { label: 'All Properties', value: 'all', count: allProperties.length },
+    { label: 'For Rent', value: 'rent', count: allProperties.filter(p => p.type === 'rent').length },
+    { label: 'For Sale', value: 'sale', count: allProperties.filter(p => p.type === 'sale').length },
+  ] as const
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -116,57 +50,20 @@ export default function PropertiesPage() {
 
             {/* Filter Buttons */}
             <div className="flex space-x-2">
-              {filters.map((filter) => (
+              {filters.map((f) => (
                 <button
-                  key={filter.value}
-                  className="px-6 py-3 rounded-lg border border-gray-300 hover:border-primary-500 hover:bg-primary-50 transition-colors"
+                  key={f.value}
+                  onClick={() => { setFilter(f.value as any); setVisible(9) }}
+                  className={`px-6 py-3 rounded-lg border ${filter===f.value ? 'border-primary-600 bg-primary-50' : 'border-gray-300 hover:border-primary-500 hover:bg-primary-50'} transition-colors`}
                 >
-                  <span className="font-medium text-gray-700">{filter.label}</span>
-                  <span className="ml-2 px-2 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">
-                    {filter.count}
-                  </span>
+                  <span className="font-medium text-gray-700">{f.label}</span>
+                  <span className="ml-2 px-2 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">{f.count}</span>
                 </button>
               ))}
             </div>
           </div>
 
           {/* Advanced Filters */}
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <div className="flex flex-wrap gap-4 items-center">
-              <span className="text-sm font-medium text-gray-700">Filters:</span>
-              
-              <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
-                <option>Property Type</option>
-                <option>Apartment</option>
-                <option>House</option>
-                <option>Condo</option>
-                <option>Townhouse</option>
-              </select>
-              
-              <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
-                <option>Price Range</option>
-                <option>$0 - $500,000</option>
-                <option>$500,000 - $1,000,000</option>
-                <option>$1,000,000+</option>
-              </select>
-              
-              <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
-                <option>Bedrooms</option>
-                <option>1+</option>
-                <option>2+</option>
-                <option>3+</option>
-                <option>4+</option>
-              </select>
-              
-              <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
-                <option>Bathrooms</option>
-                <option>1+</option>
-                <option>2+</option>
-                <option>3+</option>
-                <option>4+</option>
-              </select>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -174,18 +71,26 @@ export default function PropertiesPage() {
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {properties.map((property) => (
+            {list.map((property) => (
               <div key={property.id} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
                 {/* Property Image */}
                 <div className="relative h-64 bg-gradient-to-br from-primary-100 to-accent-100">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-200 to-accent-200 flex items-center justify-center">
-                    <Home className="w-24 h-24 text-primary-600" />
-                  </div>
+                  {property.images && property.images.length > 0 ? (
+                    <Image
+                      src={property.images[0]}
+                      alt={property.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary-200 to-accent-200" />
+                  )}
                   
                   {/* Property Type Badge */}
                   <div className="absolute top-4 left-4">
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      property.type === 'rent' 
+                      property.type === 'rent'
                         ? 'bg-blue-100 text-blue-800' 
                         : 'bg-green-100 text-green-800'
                     }`}>
@@ -215,7 +120,7 @@ export default function PropertiesPage() {
                   </div>
                   
                   <div className="text-2xl font-bold text-primary-600 mb-4">
-                    {property.price}
+                    {property.priceFormatted}
                   </div>
                   
                   {/* Property Stats */}
@@ -230,18 +135,14 @@ export default function PropertiesPage() {
                     </div>
                     <div className="flex items-center">
                       <Square className="w-4 h-4 mr-1" />
-                      <span>{property.sqft} sqft</span>
+                      <span>{property.sqft.toLocaleString()} sqft</span>
                     </div>
                   </div>
                   
                   {/* Action Buttons */}
                   <div className="flex space-x-3">
-                    <button className="flex-1 btn-primary">
-                      View Details
-                    </button>
-                    <button className="px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
-                      <Phone className="w-4 h-4" />
-                    </button>
+                    <Link href={`/properties/${property.slug}`} className="flex-1 btn-primary text-center">View Details</Link>
+                    <Link href={`/properties/${property.slug}#schedule-viewing`} className="px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors"><Phone className="w-4 h-4" /></Link>
                   </div>
                 </div>
               </div>
@@ -250,9 +151,11 @@ export default function PropertiesPage() {
 
           {/* Load More */}
           <div className="text-center mt-12">
-            <button className="btn-secondary">
-              Load More Properties
-            </button>
+            {visible < filtered.length && (
+              <button className="btn-secondary" onClick={() => setVisible((v) => v + 9)}>
+                Load More Properties
+              </button>
+            )}
           </div>
         </div>
       </section>
